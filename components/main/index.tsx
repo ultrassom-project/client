@@ -5,6 +5,7 @@ import MainAppBar from './app-bar';
 import MainMenu from './menu';
 import Reconstructions from './reconstructions';
 import Performance from './performance';
+import Submit from './submit';
 
 const Main: NextPage = (props) => {
     const [selected, setSelected] = React.useState<string>('performance');
@@ -18,6 +19,7 @@ const Main: NextPage = (props) => {
                 <Toolbar />
                 {selected === 'reconstructions' ? <Reconstructions /> : null}
                 {selected === 'performance' ? <Performance /> : null}
+                {selected === 'submit' ? <Submit /> : null}
             </Box>
         </Box>
     );

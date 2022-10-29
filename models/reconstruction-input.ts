@@ -6,5 +6,5 @@ export type ReconstructionInput = {
     algorithm: ReconstructionAlgorithmType;
     dimension: ReconstructionDimension;
     signalGain: number;
-    signalVector: [number];
+    signalVector: number[];
 };
