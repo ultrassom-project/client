@@ -4,21 +4,25 @@ import { Box, Stack } from '@mui/material';
 
 interface ReconstructionImageProps {
     outputImageArray: string[][];
+    size: number;
 }
 
 const ReconstructionImage: NextPage<ReconstructionImageProps> = (props) => {
-    const { outputImageArray } = props;
+    const { outputImageArray, size } = props;
+    const pixelSize = size / outputImageArray.length;
 
     return (
-        <Stack>
-            {outputImageArray.map((line, index) => (
-                <Stack key={index} direction="row">
-                    {line.map((item, index) => (
-                        <Box key={index} sx={{ backgroundColor: item, width: 10, height: 10 }} />
-                    ))}
-                </Stack>
-            ))}
-        </Stack>
+        <Box sx={{ width: size, height: size }}>
+            <Stack direction="column">
+                {outputImageArray.map((line, index) => (
+                    <Stack key={index} direction="row">
+                        {line.map((item, index) => (
+                            <Box key={index} sx={{ backgroundColor: item, width: pixelSize, height: pixelSize }} />
+                        ))}
+                    </Stack>
+                ))}
+            </Stack>
+        </Box>
     );
 };
 

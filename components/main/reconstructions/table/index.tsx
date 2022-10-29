@@ -18,13 +18,13 @@ const ReconstructionsTable: NextPage<ReconstructionsTableProps> = (props) => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Image</TableCell>
-                        <TableCell>User Id</TableCell>
+                        <TableCell sx={{ width: 300 }}>Image</TableCell>
+                        <TableCell>Size</TableCell>
                         <TableCell>Algorithm</TableCell>
-                        <TableCell>Signal Gain</TableCell>
-                        <TableCell>I</TableCell>
-                        <TableCell>Start Time</TableCell>
-                        <TableCell>End Time</TableCell>
+                        <TableCell>Gain</TableCell>
+                        <TableCell>It</TableCell>
+                        <TableCell>Duration</TableCell>
+                        <TableCell>User</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
