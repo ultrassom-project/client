@@ -27,9 +27,9 @@ const Reconstructions: NextPage<ReconstructionsProps> = (props) => {
         }
     }, []);
 
-    useEffect(() => {
-        reloadReconstructions();
-    }, [reloadReconstructions]);
+    // useEffect(() => {
+    //     reloadReconstructions();
+    // }, [reloadReconstructions]);
 
     return (
         <Paper sx={{ p: 2, paddingBottom: 4 }}>

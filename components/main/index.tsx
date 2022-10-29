@@ -4,9 +4,10 @@ import { NextPage } from 'next';
 import MainAppBar from './app-bar';
 import MainMenu from './menu';
 import Reconstructions from './reconstructions';
+import Performance from './performance';
 
 const Main: NextPage = (props) => {
-    const [selected, setSelected] = React.useState<string>('reconstructions');
+    const [selected, setSelected] = React.useState<string>('performance');
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -16,6 +17,7 @@ const Main: NextPage = (props) => {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <Toolbar />
                 {selected === 'reconstructions' ? <Reconstructions /> : null}
+                {selected === 'performance' ? <Performance /> : null}
             </Box>
         </Box>
     );
