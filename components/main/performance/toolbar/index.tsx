@@ -26,6 +26,9 @@ const PerformanceToolbar: NextPage<PerformanceToolbarProps> = (props) => {
                 <TextField
                     disabled={loading}
                     label="Start Date"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     value={startDate}
                     color="primary"
                     id="time"
@@ -37,6 +40,9 @@ const PerformanceToolbar: NextPage<PerformanceToolbarProps> = (props) => {
                 <TextField
                     disabled={loading}
                     label="End Date"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     value={endDate}
                     color="primary"
                     id="time"
