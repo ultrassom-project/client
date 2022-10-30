@@ -12,6 +12,7 @@ import createEmotionCache from '../utility/create-emotion-cache';
 import lightThemeOptions from '../styles/themes/light-theme-options';
 import '../styles/globals.css';
 import Head from 'next/head';
+import AppProvider from '../hooks';
 
 interface MyAppProps extends AppProps {
     emotionCache?: EmotionCache;
@@ -26,13 +27,15 @@ const MyApp: React.FC<MyAppProps> = (props) => {
     return (
         <CacheProvider value={emotionCache}>
             <ThemeProvider theme={lightTheme}>
-                <Head>
-                    <title>Client</title>
-                    <meta name="description" content="Client" />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
-                <CssBaseline />
-                <Component {...pageProps} />
+                <AppProvider>
+                    <Head>
+                        <title>Client</title>
+                        <meta name="description" content="Client" />
+                        <link rel="icon" href="/favicon.ico" />
+                    </Head>
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </AppProvider>
             </ThemeProvider>
         </CacheProvider>
     );

@@ -6,37 +6,37 @@ import SubmitTable from './table';
 import { ReconstructionInput } from '../../../models/reconstruction-input';
 import { ReconstructionAlgorithmType } from '../../../models/reconstruction-algorithm-type';
 import { ReconstructionDimension } from '../../../models/reconstruction-dimension';
+import { enqueueReconstruction } from '../../../services/processing-service';
+import SubmitModal from './modal';
+import { useReconstructions } from '../../../hooks/reconstructions';
 
 interface SubmitProps {}
 
 const Submit: React.FC<SubmitProps> = ({}) => {
     const [loading, setLoading] = useState(false);
-    const [submitions, setSubmitions] = useState<ReconstructionInput[]>([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    
+    const { reconstructionsInputs, setReconstructionsInputs } = useReconstructions();
 
-    const handleSubmitionButtonClick = useCallback(async () => {
-        setLoading(true);
-        console.log('here');
+    const handleSubmitData = useCallback(async (data: ReconstructionInput) => {
+        await enqueueReconstruction(data);
 
-        await new Promise(res => setTimeout(() => res(null), 2000));
-
-        setSubmitions([{
-            algorithm: ReconstructionAlgorithmType.CGNE,
-            dimension: ReconstructionDimension['30x30'],
-            signalGain: 1,
-            signalVector: [0, 0, 0],
-            userId: 'TESTE'
-        }])
-
-        setLoading(false);
-    }, []);
+        setReconstructionsInputs([data, ...reconstructionsInputs]);
+    }, [reconstructionsInputs, setReconstructionsInputs]);
 
     return (
       <Paper sx={{ p: 2, paddingBottom: 4 }}>
             <SubmitToolbar
-                onSubmitionButtonClick={handleSubmitionButtonClick}
+                onSubmitionButtonClick={() => setModalOpen(true)}
                 loading={false}
             />
-            <SubmitTable loading={loading} submitions={submitions}/>
+            <SubmitTable loading={loading} submitions={reconstructionsInputs}/>
+
+            <SubmitModal 
+                isOpen={modalOpen} 
+                onClose={() => setModalOpen(false)} 
+                onSubmit={handleSubmitData} 
+            />
       </Paper>
     );
 };

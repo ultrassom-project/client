@@ -5,27 +5,29 @@ import { ReconstructionOutput } from '../../../models/reconstruction-output';
 import { getReconstructionsReport } from '../../../services/processing-service';
 import ReconstructionsToolbar from './toolbar';
 import ReconstructionsTable from './table';
+import { useReconstructions } from '../../../hooks/reconstructions';
 
 interface ReconstructionsProps {}
 
 const Reconstructions: NextPage<ReconstructionsProps> = (props) => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [reconstructions, setReconstructions] = useState<ReconstructionOutput[]>([]);
+    
+    const { reconstructionsOutputs, setReconstructionsOutputs } = useReconstructions();
 
     const reloadReconstructions = useCallback(async () => {
         try {
             setLoading(true);
-            setReconstructions([]);
+            setReconstructionsOutputs([]);
 
             const loadedReconstructions = await getReconstructionsReport();
 
-            setReconstructions(loadedReconstructions);
+            setReconstructionsOutputs(loadedReconstructions);
             setLoading(false);
         } catch (error) {
             console.log(error);
             setLoading(false);
         }
-    }, []);
+    }, [setReconstructionsOutputs]);
 
     // useEffect(() => {
     //     reloadReconstructions();
@@ -34,11 +36,11 @@ const Reconstructions: NextPage<ReconstructionsProps> = (props) => {
     return (
         <Paper sx={{ p: 2, paddingBottom: 4 }}>
             <ReconstructionsToolbar
-                reconstructionsCount={reconstructions.length}
+                reconstructionsCount={reconstructionsOutputs.length}
                 loading={loading}
                 onReloadButtonClick={reloadReconstructions}
             />
-            <ReconstructionsTable reconstructions={reconstructions} loading={loading} />
+            <ReconstructionsTable reconstructions={reconstructionsOutputs} loading={loading} />
         </Paper>
     );
 };

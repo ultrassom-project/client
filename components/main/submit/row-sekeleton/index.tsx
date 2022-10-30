@@ -1,9 +1,9 @@
 import React from 'react';
 import { Skeleton, TableCell, TableRow } from '@mui/material';
 
-interface SubmitionRowSkeletonProps {}
+interface SubmitRowSkeletonProps {}
 
-const SubmitionRowSkeleton: React.FC<SubmitionRowSkeletonProps> = ({}) => {
+const SubmitRowSkeleton: React.FC<SubmitRowSkeletonProps> = ({}) => {
     return (
         <TableRow>
             <TableCell>
@@ -22,4 +22,4 @@ const SubmitionRowSkeleton: React.FC<SubmitionRowSkeletonProps> = ({}) => {
     );
 };
 
-export default SubmitionRowSkeleton;
+export default SubmitRowSkeleton;

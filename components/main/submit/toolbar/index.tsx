@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box, Toolbar, Typography } from '@mui/material';
+import { Box, Toolbar, Typography, Modal } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Send } from '@mui/icons-material';
 
 interface SubmitToolbarProps {
     loading: boolean;
-    onSubmitionButtonClick: () => Promise<void>;
+    onSubmitionButtonClick: () => void;
 }
 
 const SubmitToolbar: React.FC<SubmitToolbarProps> = ({

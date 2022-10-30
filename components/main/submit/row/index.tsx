@@ -3,11 +3,11 @@ import { TableCell, TableRow, Tooltip } from '@mui/material';
 import { ReconstructionInput } from '../../../../models/reconstruction-input';
 import { PersonRounded } from '@mui/icons-material';
 
-interface SubmitionRowProps {
+interface SubmitRowProps {
     submition: ReconstructionInput;
 }
 
-const SubmitionRow: React.FC<SubmitionRowProps> = ({
+const SubmitRow: React.FC<SubmitRowProps> = ({
     submition
 }) => {
     return (
@@ -27,4 +27,4 @@ const SubmitionRow: React.FC<SubmitionRowProps> = ({
     );
 };
 
-export default SubmitionRow;
+export default SubmitRow;

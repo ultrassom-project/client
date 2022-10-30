@@ -1,8 +1,8 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { ReconstructionInput } from '../../../../models/reconstruction-input';
-import SubmitionRow from '../row';
-import SubmitionRowSkeleton from '../row-sekeleton'
+import SubmitRow from '../row';
+import SubmitRowSkeleton from '../row-sekeleton'
 
 interface SubmitTableProps {
     loading: boolean;
@@ -27,10 +27,10 @@ const SubmitTable: React.FC<SubmitTableProps> = ({
                 <TableBody>
                     {submitions.length > 0
                         ? submitions.map((reconstruction, index) => (
-                              <SubmitionRow key={index} submition={reconstruction} />
+                              <SubmitRow key={index} submition={reconstruction} />
                           ))
                         : null}
-                    {loading ? <SubmitionRowSkeleton /> : null}
+                    {loading ? <SubmitRowSkeleton /> : null}
                 </TableBody>
             </Table>
         </TableContainer>
