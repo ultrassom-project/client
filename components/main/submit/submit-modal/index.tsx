@@ -42,7 +42,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
         }
 
         setSignalGain(newValue);
-    }, [])
+    }, []);
 
     const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.currentTarget.files) {
@@ -50,7 +50,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
         }
 
         setSignalVectorFile(event.currentTarget.files[0]);
-    }, [])
+    }, []);
 
     const submitButtonEnabled = useMemo((): boolean => {
         if (userId === '' || signalGain === '' || !signalVectorFile) {
@@ -58,7 +58,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
         }
 
         return true;
-    }, [userId, signalGain, signalVectorFile])
+    }, [userId, signalGain, signalVectorFile]);
 
     const handleSubmitPress = useCallback(async () => {
         setLoading(true);
