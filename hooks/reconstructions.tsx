@@ -10,9 +10,13 @@ import { ReconstructionOutput } from '../models/reconstruction-output';
   
   interface ReconstructionsContextData {
     reconstructionsInputs: ReconstructionInput[];
-    reconstructionsOutputs: ReconstructionOutput[];
     setReconstructionsInputs: (data: ReconstructionInput[]) => void;
+    reconstructionsOutputs: ReconstructionOutput[];
     setReconstructionsOutputs: (data: ReconstructionOutput[]) => void;
+    randomSubmitTimeInterval: number;
+    setRandomSubmitTimeInterval: (value: number) => void;
+    runningRandomSubmit: boolean;
+    setRunningRandomSubmit: (value: boolean) => void;
   }
   
   const ReconstructionsContext = createContext<ReconstructionsContextData>({} as ReconstructionsContextData);
@@ -20,14 +24,22 @@ import { ReconstructionOutput } from '../models/reconstruction-output';
   const ReconstructionsProvider: React.FC = ({ children }) => {
     const [reconstructionsInputs, setReconstructionsInputs] = useState<ReconstructionInput[]>([]);
     const [reconstructionsOutputs, setReconstructionsOutputs] = useState<ReconstructionOutput[]>([]);
+    
+    const [randomSubmitTimeInterval, setRandomSubmitTimeInterval] = useState(0);
+    const [runningRandomSubmit, setRunningRandomSubmit] = useState(false);
   
     return (
       <ReconstructionsContext.Provider
         value={{
             reconstructionsInputs, 
-            reconstructionsOutputs, 
             setReconstructionsInputs, 
+            reconstructionsOutputs, 
             setReconstructionsOutputs,
+
+            randomSubmitTimeInterval,
+            setRandomSubmitTimeInterval,
+            runningRandomSubmit,
+            setRunningRandomSubmit,
         }}
       >
         {children}

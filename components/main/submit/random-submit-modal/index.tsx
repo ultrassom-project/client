@@ -82,6 +82,7 @@ const RandomSubmitModal: React.FC<RandomSubmitModalProps> = ({
                 dimension: signalVectorFilesDimensions[index]
             }
         })
+        onClose();
 
         await onRandomSubmit({
             userId,
@@ -90,7 +91,6 @@ const RandomSubmitModal: React.FC<RandomSubmitModalProps> = ({
         });
 
         setLoading(false);
-        onClose();
     }, [userId, signalVectorFiles, signalVectorFilesDimensions, timeInterval, onRandomSubmit, onClose]);
 
     return (
@@ -175,6 +175,9 @@ const RandomSubmitModal: React.FC<RandomSubmitModalProps> = ({
                                 variant="outlined"
                                 component="label"
                                 color="primary"
+                                sx={{
+                                    marginTop: 2,
+                                }}
                             >
                                 Upload Signal File
                                 <input 

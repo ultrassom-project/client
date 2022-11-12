@@ -21,7 +21,12 @@ const Submit: React.FC<SubmitProps> = ({}) => {
     const [submitModalOpen, setSubmitModalOpen] = useState(false);
     const [randomSubmitModalOpen, setRandomSubmitModalOpen] = useState(false);
     
-    const { reconstructionsInputs, setReconstructionsInputs } = useReconstructions();
+    const { 
+        reconstructionsInputs, 
+        setReconstructionsInputs,
+        setRandomSubmitTimeInterval,
+        setRunningRandomSubmit
+    } = useReconstructions();
 
     const handleSubmitData = useCallback(async (data: ReconstructionInput) => {
         await enqueueReconstruction(data);
@@ -48,31 +53,38 @@ const Submit: React.FC<SubmitProps> = ({}) => {
         }
     }, []);
 
-    const handleRandomSubmitData = useCallback(async (data: ReconstructionRandomInput) => {
-        const delay = (timeInterval: number) => new Promise(res => setTimeout(() => res({}), timeInterval));
-        let done = false;
-        
-        setTimeout(() => {
-            done = true;
-        }, data.timeInterval * 1000);
+    const handleRandomSubmitData = useCallback(
+        async (data: ReconstructionRandomInput) => {
+            const delay = (timeInterval: number) => new Promise(res => setTimeout(() => res({}), timeInterval));
+            let done = false;
 
-        let previousInputs = [...reconstructionsInputs];
+            setRandomSubmitTimeInterval(data.timeInterval);
+            setRunningRandomSubmit(true);
+            
+            setTimeout(() => {
+                done = true;
+                setRunningRandomSubmit(false);
+            }, data.timeInterval * 1000);
 
-        while (true) {
-            if (done) {
-                break;
+            let previousInputs = [...reconstructionsInputs];
+            while (!done) {
+                const randomReconstructionInput = generateRandomReconstructionInput(data.userId, data.inputSignals);
+                previousInputs = [randomReconstructionInput, ...previousInputs]
+
+                await enqueueReconstruction(randomReconstructionInput);
+                setReconstructionsInputs(previousInputs);
+
+                await delay(randomIntFromInterval(0, data.timeInterval * 1000));
             }
-
-            const randomReconstructionInput = generateRandomReconstructionInput(data.userId, data.inputSignals);
-            previousInputs = [randomReconstructionInput, ...previousInputs]
-
-            await enqueueReconstruction(randomReconstructionInput);
-            setReconstructionsInputs(previousInputs);
-
-
-            await delay(randomIntFromInterval(0, data.timeInterval * 1000));
-        }
-    }, [generateRandomReconstructionInput, reconstructionsInputs, setReconstructionsInputs]);
+        },
+        [
+            generateRandomReconstructionInput, 
+            reconstructionsInputs, 
+            setReconstructionsInputs,
+            setRandomSubmitTimeInterval,
+            setRunningRandomSubmit
+        ]
+    );
 
     return (
       <Paper sx={{ p: 2, paddingBottom: 4 }}>

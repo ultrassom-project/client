@@ -20,6 +20,7 @@ const Reconstructions: NextPage<ReconstructionsProps> = (props) => {
             setReconstructionsOutputs([]);
 
             const loadedReconstructions = await getReconstructionsReport();
+            loadedReconstructions.reverse();
 
             setReconstructionsOutputs(loadedReconstructions);
             setLoading(false);
