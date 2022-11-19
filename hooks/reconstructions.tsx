@@ -5,12 +5,12 @@ import React, {
     useContext,
     useEffect,
   } from 'react';
-import { ReconstructionInput } from '../models/reconstruction-input';
+import { ReconstructionSubmition } from '../models/reconstruction-submition';
 import { ReconstructionOutput } from '../models/reconstruction-output';
   
   interface ReconstructionsContextData {
-    reconstructionsInputs: ReconstructionInput[];
-    setReconstructionsInputs: (data: ReconstructionInput[]) => void;
+    reconstructionsSubmitions: ReconstructionSubmition[];
+    setReconstructionsSubmitions: (data: ReconstructionSubmition[]) => void;
     reconstructionsOutputs: ReconstructionOutput[];
     setReconstructionsOutputs: (data: ReconstructionOutput[]) => void;
     randomSubmitTimeInterval: number;
@@ -22,7 +22,7 @@ import { ReconstructionOutput } from '../models/reconstruction-output';
   const ReconstructionsContext = createContext<ReconstructionsContextData>({} as ReconstructionsContextData);
   
   const ReconstructionsProvider: React.FC = ({ children }) => {
-    const [reconstructionsInputs, setReconstructionsInputs] = useState<ReconstructionInput[]>([]);
+    const [reconstructionsSubmitions, setReconstructionsSubmitions] = useState<ReconstructionSubmition[]>([]);
     const [reconstructionsOutputs, setReconstructionsOutputs] = useState<ReconstructionOutput[]>([]);
     
     const [randomSubmitTimeInterval, setRandomSubmitTimeInterval] = useState(0);
@@ -31,8 +31,8 @@ import { ReconstructionOutput } from '../models/reconstruction-output';
     return (
       <ReconstructionsContext.Provider
         value={{
-            reconstructionsInputs, 
-            setReconstructionsInputs, 
+            reconstructionsSubmitions, 
+            setReconstructionsSubmitions, 
             reconstructionsOutputs, 
             setReconstructionsOutputs,
 

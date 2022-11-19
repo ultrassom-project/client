@@ -1,12 +1,12 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { ReconstructionInput } from '../../../../models/reconstruction-input';
 import SubmitRow from '../row';
 import SubmitRowSkeleton from '../row-sekeleton'
+import { ReconstructionSubmition } from '../../../../models/reconstruction-submition';
 
 interface SubmitTableProps {
     loading: boolean;
-    submitions: ReconstructionInput[];
+    submitions: ReconstructionSubmition[];
 }
 
 const SubmitTable: React.FC<SubmitTableProps> = ({
@@ -20,7 +20,7 @@ const SubmitTable: React.FC<SubmitTableProps> = ({
                     <TableRow>
                         <TableCell>Algorithm</TableCell>
                         <TableCell>Dimension</TableCell>
-                        <TableCell>Gain</TableCell>
+                        <TableCell>Signal Gain?</TableCell>
                         <TableCell>User</TableCell>
                     </TableRow>
                 </TableHead>

@@ -21,7 +21,7 @@ const ReconstructionsTable: NextPage<ReconstructionsTableProps> = (props) => {
                         <TableCell sx={{ width: 300 }}>Image</TableCell>
                         <TableCell>Size</TableCell>
                         <TableCell>Algorithm</TableCell>
-                        <TableCell>Gain</TableCell>
+                        {/* <TableCell>Gain?</TableCell> */}
                         <TableCell>It</TableCell>
                         <TableCell>Duration</TableCell>
                         <TableCell>User</TableCell>

@@ -4,6 +4,7 @@ import { Avatar, TableCell, TableRow, Tooltip, Typography } from '@mui/material'
 import { ReconstructionOutput } from '../../../../models/reconstruction-output';
 import ReconstructionImage from '../image';
 import { Person, PersonRounded, VerifiedUser } from '@mui/icons-material';
+import Reconstructions from '..';
 
 interface ReconstructionsRowProps {
     reconstruction: ReconstructionOutput;
@@ -25,7 +26,6 @@ const ReconstructionsRow: NextPage<ReconstructionsRowProps> = (props) => {
                 {reconstruction.input.dimension} x {reconstruction.input.dimension}
             </TableCell>
             <TableCell>{reconstruction.input.algorithm}</TableCell>
-            <TableCell>{reconstruction.input.signalGain}</TableCell>
             <TableCell>{reconstruction.iterations}</TableCell>
             <TableCell>{duration} s</TableCell>
             <TableCell>

@@ -45,6 +45,10 @@ const RandomSubmitModal: React.FC<RandomSubmitModalProps> = ({
             return;
         }
 
+        if (event.currentTarget.files.length === 0) {
+            return;
+        }
+
         setSignalVectorFiles([event.currentTarget.files[0], ...signalVectorFiles]);
         setSignalVectorFilesDimensions([fileDimension, ...signalVectorFilesDimensions]);
     }, [signalVectorFiles, signalVectorFilesDimensions, fileDimension]);

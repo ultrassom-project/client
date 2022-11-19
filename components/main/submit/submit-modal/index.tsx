@@ -2,17 +2,17 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { Modal, Typography, TextField, Box, MenuItem, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Send } from '@mui/icons-material';
-import Papa from 'papaparse';
-import { ReconstructionInput } from '../../../../models/reconstruction-input';
 import { ReconstructionAlgorithmType } from '../../../../models/reconstruction-algorithm-type';
 import { ReconstructionDimension } from '../../../../models/reconstruction-dimension';
 import { convertCsvToNumberArray } from '../../../../utils/file-reader';
 import { FileUploadContainer, FormContainer } from './styles';
+import { ReconstructionSubmition } from '../../../../models/reconstruction-submition';
+import { applySignalGain } from '../../../../utils/signal-gain';
 
 interface SubmitModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (data: ReconstructionInput) => Promise<void>;
+    onSubmit: (data: ReconstructionSubmition) => Promise<void>;
 }
 
 const SubmitModal: React.FC<SubmitModalProps> = ({
@@ -23,26 +23,9 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
     const [userId, setUserId] = useState('');
     const [algorithm, setAlgorithm] = useState<ReconstructionAlgorithmType>(ReconstructionAlgorithmType.CGNE);
     const [dimension, setDimension] = useState<ReconstructionDimension>(ReconstructionDimension['30x30']);
-    const [signalGain, setSignalGain] = useState('');
+    const [signalGain, setSignalGain] = useState(false);
     const [signalVectorFile, setSignalVectorFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
-
-    const handleSignalGainChange = useCallback(newValue => {
-        if (newValue === '') {
-            setSignalGain(newValue);
-            return;
-        }
-
-        if (newValue.includes('.')) {
-            return;
-        }
-
-        if (isNaN(newValue) || isNaN(parseFloat(newValue))) {
-            return;
-        }
-
-        setSignalGain(newValue);
-    }, []);
 
     const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.currentTarget.files) {
@@ -53,12 +36,12 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
     }, []);
 
     const submitButtonEnabled = useMemo((): boolean => {
-        if (userId === '' || signalGain === '' || !signalVectorFile) {
+        if (userId === '' || !signalVectorFile) {
             return false;
         }
 
         return true;
-    }, [userId, signalGain, signalVectorFile]);
+    }, [userId, signalVectorFile]);
 
     const handleSubmitPress = useCallback(async () => {
         setLoading(true);
@@ -67,14 +50,18 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
             return
         }
 
-        const signalVector = await convertCsvToNumberArray(signalVectorFile);
+        let signalVector = await convertCsvToNumberArray(signalVectorFile);
+
+        if (signalGain) {
+            applySignalGain(signalVector, dimension);
+        }
 
         await onSubmit({
             userId,
             algorithm,
             dimension,
-            signalGain: parseInt(signalGain),
-            signalVector
+            signalVector,
+            signalGain
         });
 
         setLoading(false);
@@ -154,9 +141,17 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
                         color="primary"
                         label="signal gain"
                         variant="outlined"
+                        select
                         value={signalGain}
-                        onChange={e => handleSignalGainChange(e.target.value)}
-                    />
+                        onChange={e => setSignalGain(e.target.value === 'true')}
+                    >
+                        <MenuItem value={'false'}>
+                            No
+                        </MenuItem>
+                        <MenuItem value={'true'}>
+                            Yes
+                        </MenuItem>
+                    </TextField>
                     
                     <FileUploadContainer>
                         {signalVectorFile && (
