@@ -19,7 +19,7 @@ export const UploadedFilesContainer = styled.div`
 export const UploadedFileNameContainer = styled.div`
     &:hover {
         p {
-            color: #FF0000;
+            color: #ff0000;
         }
         cursor: pointer;
     }

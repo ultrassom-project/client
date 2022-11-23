@@ -10,9 +10,9 @@ interface SubmitToolbarProps {
 }
 
 const SubmitToolbar: React.FC<SubmitToolbarProps> = ({
-  loading,
-  onSubmitionButtonClick,
-  onRandomSumbitButtonClick
+    loading,
+    onSubmitionButtonClick,
+    onRandomSumbitButtonClick,
 }) => {
     return (
         <Toolbar sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>

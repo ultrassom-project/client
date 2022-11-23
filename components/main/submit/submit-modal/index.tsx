@@ -15,11 +15,7 @@ interface SubmitModalProps {
     onSubmit: (data: ReconstructionSubmition) => Promise<void>;
 }
 
-const SubmitModal: React.FC<SubmitModalProps> = ({
-    isOpen,
-    onClose,
-    onSubmit
-}) => {
+const SubmitModal: React.FC<SubmitModalProps> = ({ isOpen, onClose, onSubmit }) => {
     const [userId, setUserId] = useState('');
     const [algorithm, setAlgorithm] = useState<ReconstructionAlgorithmType>(ReconstructionAlgorithmType.CGNE);
     const [dimension, setDimension] = useState<ReconstructionDimension>(ReconstructionDimension['30x30']);
@@ -47,7 +43,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
         setLoading(true);
 
         if (signalVectorFile === null) {
-            return
+            return;
         }
 
         let signalVector = await convertCsvToNumberArray(signalVectorFile);
@@ -61,7 +57,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
             algorithm,
             dimension,
             signalVector,
-            signalGain
+            signalGain,
         });
 
         setLoading(false);
@@ -86,10 +82,10 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: 500,
-                    bgcolor: "background.paper",
+                    bgcolor: 'background.paper',
                     boxShadow: 24,
                     p: 4,
-                    borderRadius: 4
+                    borderRadius: 4,
                 }}
             >
                 <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -97,81 +93,56 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
                 </Typography>
 
                 <FormContainer>
-                    <TextField 
+                    <TextField
                         color="primary"
                         label="user id"
                         variant="outlined"
                         value={userId}
-                        onChange={e => setUserId(e.target.value)}
+                        onChange={(e) => setUserId(e.target.value)}
                     />
 
-                    <TextField 
+                    <TextField
                         color="primary"
                         label="algorithm"
                         variant="outlined"
                         select
                         value={algorithm}
-                        onChange={e => setAlgorithm(e.target.value as ReconstructionAlgorithmType)}
+                        onChange={(e) => setAlgorithm(e.target.value as ReconstructionAlgorithmType)}
                     >
-                        <MenuItem value={ReconstructionAlgorithmType.CGNE}>
-                            {ReconstructionAlgorithmType.CGNE}
-                        </MenuItem>
-                        <MenuItem value={ReconstructionAlgorithmType.CGNR}>
-                            {ReconstructionAlgorithmType.CGNR}
-                        </MenuItem>
+                        <MenuItem value={ReconstructionAlgorithmType.CGNE}>{ReconstructionAlgorithmType.CGNE}</MenuItem>
+                        <MenuItem value={ReconstructionAlgorithmType.CGNR}>{ReconstructionAlgorithmType.CGNR}</MenuItem>
                     </TextField>
 
-                    <TextField 
+                    <TextField
                         color="primary"
                         label="dimension"
                         variant="outlined"
                         select
                         value={dimension}
-                        onChange={e => setDimension(parseInt(e.target.value) as ReconstructionDimension)}
+                        onChange={(e) => setDimension(parseInt(e.target.value) as ReconstructionDimension)}
                     >
-                        <MenuItem value={ReconstructionDimension['30x30']}>
-                            {ReconstructionDimension['30x30']}
-                        </MenuItem>
-                        <MenuItem value={ReconstructionDimension['60x60']}>
-                            {ReconstructionDimension['60x60']}
-                        </MenuItem>
+                        <MenuItem value={ReconstructionDimension['30x30']}>{ReconstructionDimension['30x30']}</MenuItem>
+                        <MenuItem value={ReconstructionDimension['60x60']}>{ReconstructionDimension['60x60']}</MenuItem>
                     </TextField>
 
-                    <TextField 
+                    <TextField
                         color="primary"
                         label="signal gain"
                         variant="outlined"
                         select
                         value={signalGain}
-                        onChange={e => setSignalGain(e.target.value === 'true')}
+                        onChange={(e) => setSignalGain(e.target.value === 'true')}
                     >
-                        <MenuItem value={'false'}>
-                            No
-                        </MenuItem>
-                        <MenuItem value={'true'}>
-                            Yes
-                        </MenuItem>
+                        <MenuItem value={'false'}>No</MenuItem>
+                        <MenuItem value={'true'}>Yes</MenuItem>
                     </TextField>
-                    
-                    <FileUploadContainer>
-                        {signalVectorFile && (
-                            <Typography>
-                                {signalVectorFile.name}
-                            </Typography>
-                        )}
 
-                        <Button
-                            variant="outlined"
-                            component="label"
-                            color="primary"
-                        >
+                    <FileUploadContainer>
+                        {signalVectorFile && <Typography>{signalVectorFile.name}</Typography>}
+
+                        <Button variant="outlined" component="label" color="primary">
                             {signalVectorFile ? 'Change Signal File' : 'Upload Signal File'}
-                            <input 
-                                type="file" 
-                                accept='.csv'
-                                onChange={handleFileUpload} 
-                                hidden 
-                            />
+                            <input type="file" accept=".csv" onChange={handleFileUpload} hidden />
                         </Button>
                     </FileUploadContainer>
 
@@ -186,7 +157,7 @@ const SubmitModal: React.FC<SubmitModalProps> = ({
                         sx={{ marginTop: 10 }}
                     >
                         {loading ? 'Loading' : 'Submit'}
-                    </LoadingButton>  
+                    </LoadingButton>
                 </FormContainer>
             </Box>
         </Modal>

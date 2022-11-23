@@ -20,61 +20,61 @@ const Submit: React.FC<SubmitProps> = ({}) => {
     const [loading, setLoading] = useState(false);
     const [submitModalOpen, setSubmitModalOpen] = useState(false);
     const [randomSubmitModalOpen, setRandomSubmitModalOpen] = useState(false);
-    
-    const { 
-        reconstructionsSubmitions, 
+
+    const {
+        reconstructionsSubmitions,
         setReconstructionsSubmitions,
         setRandomSubmitTimeInterval,
-        setRunningRandomSubmit
+        setRunningRandomSubmit,
     } = useReconstructions();
 
-    const handleSubmitData = useCallback(async (data: ReconstructionSubmition) => {
-        await enqueueReconstruction({
-            userId: data.userId,
-            algorithm: data.algorithm,
-            dimension: data.dimension,
-            signalVector: data.signalVector,
-        });
+    const handleSubmitData = useCallback(
+        async (data: ReconstructionSubmition) => {
+            await enqueueReconstruction({
+                userId: data.userId,
+                algorithm: data.algorithm,
+                dimension: data.dimension,
+                signalVector: data.signalVector,
+            });
 
-        setReconstructionsSubmitions([data, ...reconstructionsSubmitions]);
-    }, [reconstructionsSubmitions, setReconstructionsSubmitions]);
+            setReconstructionsSubmitions([data, ...reconstructionsSubmitions]);
+        },
+        [reconstructionsSubmitions, setReconstructionsSubmitions]
+    );
 
-    const generateRandomReconstructionSubmition = useCallback((
-        userId: string, 
-        inputSignals: ReconstructionInputSignal[]
-    ): ReconstructionSubmition => {
-        const algorithm = [ReconstructionAlgorithmType.CGNE, ReconstructionAlgorithmType.CGNR][
-            randomIntFromInterval(0, 1)
-        ];
+    const generateRandomReconstructionSubmition = useCallback(
+        (userId: string, inputSignals: ReconstructionInputSignal[]): ReconstructionSubmition => {
+            const algorithm = [ReconstructionAlgorithmType.CGNE, ReconstructionAlgorithmType.CGNR][
+                randomIntFromInterval(0, 1)
+            ];
 
-        const signalGain = randomIntFromInterval(0, 1) === 0;
+            const signalGain = randomIntFromInterval(0, 1) === 0;
 
-        let inputSignal = inputSignals[randomIntFromInterval(0, inputSignals.length-1)];
+            let inputSignal = inputSignals[randomIntFromInterval(0, inputSignals.length - 1)];
 
-        if (signalGain) {
-            applySignalGain(
-                inputSignal.signalVector, 
-                inputSignal.dimension
-            );
-        }
+            if (signalGain) {
+                applySignalGain(inputSignal.signalVector, inputSignal.dimension);
+            }
 
-        return {
-            userId,
-            algorithm,
-            dimension: inputSignal.dimension,
-            signalGain,
-            signalVector: inputSignal.signalVector,
-        }
-    }, []);
+            return {
+                userId,
+                algorithm,
+                dimension: inputSignal.dimension,
+                signalGain,
+                signalVector: inputSignal.signalVector,
+            };
+        },
+        []
+    );
 
     const handleRandomSubmitData = useCallback(
         async (data: ReconstructionRandomInput) => {
-            const delay = (timeInterval: number) => new Promise(res => setTimeout(() => res({}), timeInterval));
+            const delay = (timeInterval: number) => new Promise((res) => setTimeout(() => res({}), timeInterval));
             let done = false;
 
             setRandomSubmitTimeInterval(data.timeInterval);
             setRunningRandomSubmit(true);
-            
+
             setTimeout(() => {
                 done = true;
                 setRunningRandomSubmit(false);
@@ -82,14 +82,17 @@ const Submit: React.FC<SubmitProps> = ({}) => {
 
             let previousSubmitions = [...reconstructionsSubmitions];
             while (!done) {
-                const randomReconstructionSubmition = generateRandomReconstructionSubmition(data.userId, data.inputSignals);
-                previousSubmitions = [randomReconstructionSubmition, ...previousSubmitions]
+                const randomReconstructionSubmition = generateRandomReconstructionSubmition(
+                    data.userId,
+                    data.inputSignals
+                );
+                previousSubmitions = [randomReconstructionSubmition, ...previousSubmitions];
 
                 await enqueueReconstruction({
                     userId: randomReconstructionSubmition.userId,
                     algorithm: randomReconstructionSubmition.algorithm,
                     dimension: randomReconstructionSubmition.dimension,
-                    signalVector: randomReconstructionSubmition.signalVector
+                    signalVector: randomReconstructionSubmition.signalVector,
                 });
                 setReconstructionsSubmitions(previousSubmitions);
 
@@ -97,35 +100,35 @@ const Submit: React.FC<SubmitProps> = ({}) => {
             }
         },
         [
-            generateRandomReconstructionSubmition, 
-            reconstructionsSubmitions, 
+            generateRandomReconstructionSubmition,
+            reconstructionsSubmitions,
             setReconstructionsSubmitions,
             setRandomSubmitTimeInterval,
-            setRunningRandomSubmit
+            setRunningRandomSubmit,
         ]
     );
 
     return (
-      <Paper sx={{ p: 2, paddingBottom: 4 }}>
+        <Paper sx={{ p: 2, paddingBottom: 4 }}>
             <SubmitToolbar
                 onSubmitionButtonClick={() => setSubmitModalOpen(true)}
                 onRandomSumbitButtonClick={() => setRandomSubmitModalOpen(true)}
                 loading={false}
             />
-            <SubmitTable loading={loading} submitions={reconstructionsSubmitions}/>
+            <SubmitTable loading={loading} submitions={reconstructionsSubmitions} />
 
-            <SubmitModal 
-                isOpen={submitModalOpen} 
-                onClose={() => setSubmitModalOpen(false)} 
-                onSubmit={handleSubmitData} 
+            <SubmitModal
+                isOpen={submitModalOpen}
+                onClose={() => setSubmitModalOpen(false)}
+                onSubmit={handleSubmitData}
             />
 
-            <RandomSubmitModal 
-                isOpen={randomSubmitModalOpen} 
-                onClose={() => setRandomSubmitModalOpen(false)} 
-                onRandomSubmit={handleRandomSubmitData} 
+            <RandomSubmitModal
+                isOpen={randomSubmitModalOpen}
+                onClose={() => setRandomSubmitModalOpen(false)}
+                onRandomSubmit={handleRandomSubmitData}
             />
-      </Paper>
+        </Paper>
     );
 };
 

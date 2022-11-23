@@ -1,4 +1,4 @@
-import { ReconstructionInputSignal } from "./reconstruction-input-signal";
+import { ReconstructionInputSignal } from './reconstruction-input-signal';
 
 export type ReconstructionRandomInput = {
     userId: string;

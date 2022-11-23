@@ -8,9 +8,7 @@ interface SubmitRowProps {
     submition: ReconstructionSubmition;
 }
 
-const SubmitRow: React.FC<SubmitRowProps> = ({
-    submition
-}) => {
+const SubmitRow: React.FC<SubmitRowProps> = ({ submition }) => {
     return (
         <TableRow>
             <TableCell>
