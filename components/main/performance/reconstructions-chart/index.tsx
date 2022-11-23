@@ -16,14 +16,14 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 import { Bar, Line, Scatter, Bubble } from 'react-chartjs-2';
 
-interface CpuChartProps {
+interface ReconstructionsChartProps {
     data: {
         labels: string[];
-        datasets: { data: number[] }[];
+        datasets: { data: number[]; borderColor: string; label: string }[];
     };
 }
 
-const CpuChart: NextPage<CpuChartProps> = (props) => {
+const ReconstructionsChart: NextPage<ReconstructionsChartProps> = (props) => {
     const { data } = props;
 
     return (
@@ -33,21 +33,24 @@ const CpuChart: NextPage<CpuChartProps> = (props) => {
             options={{
                 plugins: {
                     legend: {
-                        display: false,
+                        position: 'top',
                     },
                     title: {
-                        text: 'CPU Usage (%)',
+                        text: 'Reconstructions',
                         display: true,
+                    },
+                    filler: {
+                        drawTime: 'beforeDatasetDraw',
                     },
                 },
                 elements: {
                     line: {
                         tension: 0,
                         borderWidth: 1,
-                        borderColor: '#792EEB',
                         fill: 'start',
                         // backgroundColor: '#111111',
                     },
+
                     point: {
                         radius: 0,
                         hitRadius: 0,
@@ -63,4 +66,4 @@ const CpuChart: NextPage<CpuChartProps> = (props) => {
     );
 };
 
-export default CpuChart;
+export default ReconstructionsChart;
