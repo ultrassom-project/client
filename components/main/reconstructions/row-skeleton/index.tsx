@@ -25,9 +25,6 @@ const ReconstructionsRowSkeleton: NextPage<ReconstructionsRowSkeletonProps> = (p
             <TableCell>
                 <Skeleton variant="rounded" />
             </TableCell>
-            <TableCell>
-                <Skeleton variant="rounded" />
-            </TableCell>
         </TableRow>
     );
 };

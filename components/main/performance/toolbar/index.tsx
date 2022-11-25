@@ -22,7 +22,7 @@ const PerformanceToolbar: NextPage<PerformanceToolbarProps> = (props) => {
                 Performance
             </Typography>
 
-            <Box sx={{ paddingRight: 2 }}>
+            {/* <Box sx={{ paddingRight: 2 }}>
                 <TextField
                     disabled={loading}
                     label="Start Date"
@@ -49,7 +49,7 @@ const PerformanceToolbar: NextPage<PerformanceToolbarProps> = (props) => {
                     type="datetime-local"
                     onChange={() => {}}
                 />
-            </Box>
+            </Box> */}
             <Box sx={{ paddingRight: 2 }}>
                 <LoadingButton
                     color="primary"
