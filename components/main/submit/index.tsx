@@ -80,13 +80,13 @@ const Submit: React.FC<SubmitProps> = ({}) => {
                 setRunningRandomSubmit(false);
             }, data.timeInterval * 1000);
 
-            let previousSubmitions = [...reconstructionsSubmitions];
+            let auxSubmitions = [...reconstructionsSubmitions];
             while (!done) {
                 const randomReconstructionSubmition = generateRandomReconstructionSubmition(
                     data.userId,
                     data.inputSignals
                 );
-                previousSubmitions = [randomReconstructionSubmition, ...previousSubmitions];
+                auxSubmitions = [randomReconstructionSubmition, ...auxSubmitions];
 
                 await enqueueReconstruction({
                     userId: randomReconstructionSubmition.userId,
@@ -94,9 +94,9 @@ const Submit: React.FC<SubmitProps> = ({}) => {
                     dimension: randomReconstructionSubmition.dimension,
                     signalVector: randomReconstructionSubmition.signalVector,
                 });
-                setReconstructionsSubmitions(previousSubmitions);
+                setReconstructionsSubmitions(auxSubmitions);
 
-                await delay(randomIntFromInterval(0, 2000));
+                await delay(randomIntFromInterval(0, 1000));
             }
         },
         [
