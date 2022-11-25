@@ -31,7 +31,7 @@ const MemoryChart: NextPage<MemoryChartProps> = (props) => {
         <Line
             title="memory"
             data={data}
-            height={50}
+            height={80}
             options={{
                 plugins: {
                     legend: {

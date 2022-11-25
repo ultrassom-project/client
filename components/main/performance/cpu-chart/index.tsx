@@ -29,7 +29,7 @@ const CpuChart: NextPage<CpuChartProps> = (props) => {
     return (
         <Line
             data={data}
-            height={50}
+            height={80}
             options={{
                 plugins: {
                     legend: {
