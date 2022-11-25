@@ -18,6 +18,9 @@ const SubmitRowSkeleton: React.FC<SubmitRowSkeletonProps> = ({}) => {
             <TableCell>
                 <Skeleton variant="rounded" />
             </TableCell>
+            <TableCell>
+                <Skeleton variant="rounded" />
+            </TableCell>
         </TableRow>
     );
 };

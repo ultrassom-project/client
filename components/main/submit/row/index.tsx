@@ -11,6 +11,7 @@ interface SubmitRowProps {
 const SubmitRow: React.FC<SubmitRowProps> = ({ submition }) => {
     return (
         <TableRow>
+            <TableCell>{submition.id}</TableCell>
             <TableCell>
                 {submition.dimension} x {submition.dimension}
             </TableCell>

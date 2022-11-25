@@ -30,12 +30,14 @@ const Submit: React.FC<SubmitProps> = ({}) => {
 
     const handleSubmitData = useCallback(
         async (data: ReconstructionSubmition) => {
-            await enqueueReconstruction({
+            const response = await enqueueReconstruction({
                 userId: data.userId,
                 algorithm: data.algorithm,
                 dimension: data.dimension,
                 signalVector: data.signalVector,
             });
+
+            data.id = response.id;
 
             setReconstructionsSubmitions([data, ...reconstructionsSubmitions]);
         },
@@ -86,14 +88,17 @@ const Submit: React.FC<SubmitProps> = ({}) => {
                     data.userId,
                     data.inputSignals
                 );
-                auxSubmitions = [randomReconstructionSubmition, ...auxSubmitions];
 
-                await enqueueReconstruction({
+                const response = await enqueueReconstruction({
                     userId: randomReconstructionSubmition.userId,
                     algorithm: randomReconstructionSubmition.algorithm,
                     dimension: randomReconstructionSubmition.dimension,
                     signalVector: randomReconstructionSubmition.signalVector,
                 });
+
+                randomReconstructionSubmition.id = response.id;
+
+                auxSubmitions = [randomReconstructionSubmition, ...auxSubmitions];
                 setReconstructionsSubmitions(auxSubmitions);
 
                 await delay(randomIntFromInterval(0, 1000));

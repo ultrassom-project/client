@@ -20,6 +20,9 @@ const ReconstructionsRow: NextPage<ReconstructionsRowProps> = (props) => {
     return (
         <TableRow>
             <TableCell>
+                {reconstruction.input.id}
+            </TableCell>
+            <TableCell>
                 <ReconstructionImage outputImageArray={reconstruction.outputImageArray} size={300} />
             </TableCell>
             <TableCell>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { EnqueueReconstructionResponse } from '../models/enqueue-reconstruction-response';
 import { PerformanceSnapshot } from '../models/performance-snapshot';
 import { ReconstructionInput } from '../models/reconstruction-input';
 import { ReconstructionOutput } from '../models/reconstruction-output';
@@ -14,9 +15,11 @@ export async function getPerformanceReport(data: { startDate: Date; endDate: Dat
     return response.data;
 }
 
-export async function enqueueReconstruction(data: ReconstructionInput): Promise<void> {
+export async function enqueueReconstruction(data: ReconstructionInput): Promise<EnqueueReconstructionResponse> {
     const url = buildEndpointURL('/reconstructions');
-    await axios.post(url.href, data);
+    const response = await axios.post(url.href, data);
+
+    return response.data;
 }
 
 export async function getReconstructionsReport(): Promise<ReconstructionOutput[]> {

@@ -18,6 +18,7 @@ const ReconstructionsTable: NextPage<ReconstructionsTableProps> = (props) => {
             <Table>
                 <TableHead>
                     <TableRow>
+                        <TableCell>Id</TableCell>
                         <TableCell sx={{ width: 300 }}>Image</TableCell>
                         <TableCell>Size</TableCell>
                         <TableCell>Algorithm</TableCell>

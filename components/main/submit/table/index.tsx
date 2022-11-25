@@ -15,6 +15,7 @@ const SubmitTable: React.FC<SubmitTableProps> = ({ loading, submitions }) => {
             <Table>
                 <TableHead>
                     <TableRow>
+                        <TableCell>Id</TableCell>
                         <TableCell>Algorithm</TableCell>
                         <TableCell>Dimension</TableCell>
                         <TableCell>Signal Gain?</TableCell>
